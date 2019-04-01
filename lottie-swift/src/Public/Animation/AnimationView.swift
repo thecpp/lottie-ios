@@ -16,6 +16,8 @@ public enum LottieBackgroundBehavior {
   case pause
   /// Pause the animation and restart it when the application moves to the foreground. The completion block is stored and called when the animation completes.
   case pauseAndRestore
+  /// Ignore
+  case ignore
 }
 
 /// Defines animation loop behavior
@@ -43,6 +45,18 @@ final public class AnimationView: LottieView {
       makeAnimationLayer()
     }
   }
+
+/**
+     Added completion handler for animation play
+ */
+    public var completionBlock: LottieCompletionBlock? {
+        get {
+            return self.animationContext?.closure.completionBlock
+        }
+        set {
+            self.animationContext?.closure = AnimationCompletionDelegate(completionBlock: newValue)
+        }
+    }
   
   /// Set animation name from Interface Builder
   @IBInspectable var animationName: String? {
